@@ -24,6 +24,10 @@ TAREFAS = [
     },
 ]
 
+@app.get("/")
+def home():
+    return {"message": "Hello World"}
+
 @app.get("/tarefas")
 def listar():
     return TAREFAS

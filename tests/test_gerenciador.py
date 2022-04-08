@@ -3,6 +3,11 @@ from fastapi import status
 from gerenciador_tarefas.gerenciador import app, TAREFAS
 
 
+def test_quando_abrir_pagina_inicial_o_codigo_de_status_deve_ser_200():
+    cliente = TestClient(app)
+    resposta = cliente.get('/')
+    assert resposta.status_code == status.HTTP_200_OK
+    
 def test_quando_listar_tarefas_devo_ter_como_retorno_codigo_de_status_200():
     cliente = TestClient(app)
     resposta = cliente.get('/tarefas')
@@ -25,7 +30,6 @@ def test_quando_listar_tarefas_a_tarefa_retornada_deve_possuir_id():
     assert "id" in resposta.json().pop()
     TAREFAS.clear()
 
-
 def test_quando_listar_tarefas_a_tarefa_retornada_deve_possuir_titulo():
     TAREFAS.append({"titulo": "titulo 1"})
     cliente = TestClient(app)
@@ -33,14 +37,12 @@ def test_quando_listar_tarefas_a_tarefa_retornada_deve_possuir_titulo():
     assert "titulo" in resposta.json().pop()
     TAREFAS.clear()
 
-
 def test_quando_listar_tarefas_a_tarefa_retornada_deve_possuir_descricao():
     TAREFAS.append({"descricao": "descricao 1"})
     cliente = TestClient(app)
     resposta = cliente.get("/tarefas")
     assert "descricao" in resposta.json().pop()
     TAREFAS.clear()
-
 
 def test_quando_listar_tarefas_a_tarefa_retornada_deve_possuir_um_estado():
     TAREFAS.append({"estado": "finalizado"})
