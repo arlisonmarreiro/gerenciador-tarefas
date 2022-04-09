@@ -1,7 +1,9 @@
 from ast import Pass
 from fastapi.testclient import TestClient
 from fastapi import status
-from gerenciador_tarefas.gerenciador import app, TAREFAS
+from gerenciador_tarefas.data import BaseDados
+from gerenciador_tarefas.gerenciador import app, base_de_dados
+
 
 
 def test_quando_abrir_pagina_inicial_o_codigo_de_status_deve_ser_200():
@@ -24,33 +26,6 @@ def test_quando_listar_tarefas_o_retorno_deve_ser_uma_lista():
     resposta = cliente.get('/tarefas')
     assert isinstance(resposta.json(), list)
 
-def test_quando_listar_tarefas_a_tarefa_retornada_deve_possuir_id():
-    TAREFAS.append({"id": 1})
-    cliente = TestClient(app)
-    resposta = cliente.get("/tarefas")
-    assert "id" in resposta.json().pop()
-    TAREFAS.clear()
-
-def test_quando_listar_tarefas_a_tarefa_retornada_deve_possuir_titulo():
-    TAREFAS.append({"titulo": "titulo 1"})
-    cliente = TestClient(app)
-    resposta = cliente.get("/tarefas")
-    assert "titulo" in resposta.json().pop()
-    TAREFAS.clear()
-
-def test_quando_listar_tarefas_a_tarefa_retornada_deve_possuir_descricao():
-    TAREFAS.append({"descricao": "descricao 1"})
-    cliente = TestClient(app)
-    resposta = cliente.get("/tarefas")
-    assert "descricao" in resposta.json().pop()
-    TAREFAS.clear()
-
-def test_quando_listar_tarefas_a_tarefa_retornada_deve_possuir_um_estado():
-    TAREFAS.append({"estado": "finalizado"})
-    cliente = TestClient(app)
-    resposta = cliente.get("/tarefas")
-    assert "estado" in resposta.json().pop()
-    TAREFAS.clear()
 
 def test_recurso_tarefas_deve_aceitar_o_verbo_post():
     cliente = TestClient(app)
@@ -78,6 +53,10 @@ def test_descricao_da_tarefa_pode_conter_no_maximo_140_caracteres():
     cliente = TestClient(app)
     resposta = cliente.post("/tarefas", json={"titulo": "titulo", "descricao": "*" * 141})
     assert resposta.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+
+
+
+
 
 
 

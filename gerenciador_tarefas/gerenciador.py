@@ -36,6 +36,17 @@ def inserir_tarefa(tarefa: Tarefa):
     """
     return base_de_dados.inserir(tarefa.dict())
 
+@app.delete("/tarefas/{id}")
+def deletar_tarefa(id: int):
+    """
+    View para deletar uma tarefa
+    """
+    for tarefa in base_de_dados.listar():
+        if tarefa["id"] == id:
+            base_de_dados.base_de_dados.remove(tarefa)
+            return {"message": "Tarefa removida com sucesso"}
+    return {"message": "Tarefa não encontrada"}
+
 
 
   
