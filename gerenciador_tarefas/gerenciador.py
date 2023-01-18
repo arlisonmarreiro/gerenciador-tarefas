@@ -6,7 +6,7 @@ app = FastAPI()
 TAREFAS = [
     {
         "id": "1",
-        "titulo": "fazer compras",
+        "titulo": "fazer compras no mercado",
         "descrição": "comprar leite, carne e ovos",
         "estado": "não finalizado",
     },
