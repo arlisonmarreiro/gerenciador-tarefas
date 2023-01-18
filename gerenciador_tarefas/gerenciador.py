@@ -7,7 +7,7 @@ TAREFAS = [
     {
         "id": "1",
         "titulo": "fazer compras",
-        "descrição": "comprar leite e ovos",
+        "descrição": "comprar leite, carne e ovos",
         "estado": "não finalizado",
     },
     {
